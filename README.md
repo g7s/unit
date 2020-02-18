@@ -1,6 +1,6 @@
 # unit
 
-[![Clojars Project](https://img.shields.io/clojars/v/g7s/unit.svg)](https://clojars.org/g7s/unit)
+[![Clojars Project](https://img.shields.io/clojars/v/unit.svg)](https://clojars.org/unit)
 
 A Clojure(Script) library for dealing with units and conversions.
 
