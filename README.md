@@ -26,26 +26,7 @@ Define a unit with `make-unit` that has the form
 (make-unit dimensions slope y-intercept prefix?)
 ```
 
-where `dimensions` is either a 7-element vector or a keyword from the predefined dimensions:
-
-```clojure
-{:length              [1 0 0 0 0 0 0]
- :mass                [0 1 0 0 0 0 0]
- :time                [0 0 1 0 0 0 0]
- :electric-current    [0 0 0 1 0 0 0]
- :temperature         [0 0 0 0 1 0 0]
- :amount-of-substance [0 0 0 0 0 1 0]
- :luminus-intensity   [0 0 0 0 0 0 1]
- :frequency           [0 0 -1 0 0 0 0]
- :speed               [1 0 -1 0 0 0 0]
- :linear-momentum     [1 1 -1 0 0 0 0]
- :angular-momentum    [2 1 -1 0 0 0 0]
- :acceleration        [1 0 -2 0 0 0 0]
- :force               [1 1 -2 0 0 0 0]
- :energy              [2 1 -2 0 0 0 0]
- :power               [2 1 -3 0 0 0 0]}
-```
-
+where `dimensions` is either a 7-element vector or a keyword from the [predefined dimensions](https://github.com/g7s/unit/blob/master/src/unit/core.cljc#L15)
 `slope` is a non-zero number representing the conversion factor to the reference unit,
 `y-intercept` is a number (usually 0 except for units like `Celcius` etc) and `prefix?`
 a boolean that is true only when the unit accepts a prefix (defaults to `false`).
@@ -64,7 +45,7 @@ An example:
 (def pound (make-unit :mass 0.45359237))
 ```
 
-If your unit comes with a symbol it is better to use `defunit` (see [recognition](#recognition))
+If your unit comes with a symbol it is better to use `defunit` (see [Recognition](#recognition))
 
 ```clojure
 (defunit pound :lb (make-unit :mass 0.45359237))
@@ -74,10 +55,10 @@ If your unit comes with a symbol it is better to use `defunit` (see [recognition
 
 Deriving new units from other units is done with the functions
 
-    * **mult** - For multiplying units
-    * **div** - For dividing units
-    * **exp** - For exponentiating a unit
-    * **prefix** - For applying a prefix to a prefix accepting unit
+* **mult** - For multiplying units
+* **div** - For dividing units
+* **exp** - For exponentiating a unit
+* **prefix** - For applying a prefix to a prefix accepting unit
 
 An example:
 
@@ -106,6 +87,35 @@ An example:
 ```clojure
 (convert 12 pound gram) ;; => 5443.10844
 ```
+
+Note that `convert` will throw an exception if you try to convert between incompatible units
+(i.e. between units with different dimensions).
+
+
+### Recognition
+
+For every unit that has been defined with `defunit` (see [Definition](#definition)) and therefore
+has been associated with a symbol, you can use `to-unit` that takes a string and returns a
+(possibly prefixed) unit.
+
+An example:
+
+```clojure
+(to-unit "kJ") ;; The kilojoule unit
+```
+
+Note that this will throw if it cannot find the unit symbol or if the recognised unit does not
+accept a prefix and you passed a prefix or if the prefix is not supported.
+
+Examples with exceptions
+
+```clojure
+(to-unit "klb") ;; Unit does not support prefix
+(to-unit "rg")  ;; Unrecognised prefix r
+(to-unit "foo") ;; Unrecognised unit
+```
+
+Recognition ends here, this library does not try to interpret an expression involving units in any way.
 
 
 ## License
