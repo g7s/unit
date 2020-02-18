@@ -1,4 +1,4 @@
-(defproject unit "0.1.0-SNAPSHOT"
+(defproject unit "0.1.0"
   :description "Clojure(Script) library for dealing with units and conversions"
   :url "https://github.com/g7s/unit"
   :license {:name "EPL-2.0 OR GPL-2.0-or-later WITH Classpath-exception-2.0"
