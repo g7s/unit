@@ -11,7 +11,7 @@ For some background on units see [here](https://g7s.io/post/units/)
 
 To install, add the following to your project `:dependencies`:
 
-    [g7s/unit "0.1.0"]
+    [unit "0.1.0"]
 
 
 ## Usage
