@@ -177,7 +177,7 @@
   (if (= 1 k)
     u
     (make-unit (mapv #(* % k) (dimensions u))
-               (#?(:clj math/expt :cljs js/Math.exp) (slope u) k))))
+               (#?(:clj math/expt :cljs js/Math.pow) (slope u) k))))
 
 
 (defn- prefix-factor
